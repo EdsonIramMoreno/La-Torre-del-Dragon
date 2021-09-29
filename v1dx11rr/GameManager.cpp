@@ -57,16 +57,10 @@ float GameManager::camaraOffsetY(bool isFirstPerson) {
 }
 
 D3DXVECTOR3 GameManager::camaraOffset(bool isFirstPerson) {
-	D3DXVECTOR3 pos;
-	if (isFirstPerson) {
-		pos.x = camaraGM->posCam.x;
-		pos.y = camaraGM->posCam.y;
-		pos.z = camaraGM->posCam.z;
-	}
-	else {
-		pos.x = camaraGM->posCam.x - 5;
-		pos.y = camaraGM->posCam.y;
-		pos.z = camaraGM->posCam.z - 5;
-	}
-	return pos;
+	/*D3DXVECTOR3 pos = camaraGM->refFront;
+	if (!isFirstPerson) {
+		pos[0] += 5;
+		return pos;
+	}*/
+	return camaraGM->posCam;
 }

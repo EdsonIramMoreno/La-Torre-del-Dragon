@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <windowsx.h>
+#include <strsafe.h>
 
 #include "DXRR.h"
 #include "GamePadRR.h"
@@ -152,6 +153,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
     float xPos = 0;
     float yPos = 0;
 
+    
+
     switch(message){
         case WM_DESTROY:{
             GameManager* gm = GameManager::getInstance();
@@ -160,12 +163,42 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
                 gm->unloadModels();
                 return 0;
         } break;
-
-		case WM_TIMER:
-			{
+		case WM_TIMER:{
 
 			} break;
-        
+        case WM_KEYDOWN:{
+            dxrr->vel = 0;
+
+            char keyboardData[256];
+            m_pKeyboardDevice->GetDeviceState(sizeof(keyboardData), (void*)&keyboardData);
+
+            if (keyboardData[DIK_S] & 0x80 || keyboardData[DIK_DOWN] & 0x80) {
+                dxrr->vel = -5.f;
+            }
+            else if (keyboardData[DIK_W] & 0x80 || keyboardData[DIK_UP] & 0x80) {
+                dxrr->vel = 5.f;
+            }
+            else if (keyboardData[DIK_Q] & 0x80) {
+                player->setFirstPerson();
+
+            }
+            else if (keyboardData[DIK_B] & 0x80) {
+                dxrr->breakpoint = true;
+
+            }
+            else if (keyboardData[DIK_Z] & 0x80) {
+                TCHAR buffer[24];
+                StringCchPrintf(buffer, sizeof(buffer) / sizeof(TCHAR), L"X:%f, Z: %f", dxrr->camara->posCam.x, dxrr->camara->posCam.z);
+                MessageBox(hWnd, buffer, buffer, MB_OK);
+
+            }
+            else if (keyboardData[DIK_ESCAPE] & 0x80) {
+                KillTimer(hWnd, 100);
+                PostQuitMessage(0);
+                return 0;
+            }
+        }
+            break;
         case WM_MOUSEMOVE: {
             SetCursorPos(actualPoint.x, actualPoint.y);
             dxrr->frameBillboard++;
@@ -174,46 +207,18 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
             dxrr->izqder = 0;
             dxrr->arriaba = 0;
-            dxrr->vel = 0;
-
-            try {
-                char keyboardData[256];
-                m_pKeyboardDevice->GetDeviceState(sizeof(keyboardData), (void*)&keyboardData);
-
-                if (keyboardData[DIK_S] & 0x80 || keyboardData[DIK_DOWN] & 0x80) {
-                    dxrr->vel = -5.f;
-                }
-                else if (keyboardData[DIK_W] & 0x80 || keyboardData[DIK_UP] & 0x80) {
-                    dxrr->vel = 5.f;
-                }
-                else if (keyboardData[DIK_Q] & 0x80) {
-                    player->setFirstPerson();
-                }
-                else if (keyboardData[DIK_B] & 0x80) {
-                    dxrr->breakpoint = true;
-                }
-                else if (keyboardData[DIK_ESCAPE] & 0x80) {
-                    KillTimer(hWnd, 100);
-                    PostQuitMessage(0);
-                    return 0;
-                }
-            }
-            catch (LPDIRECTINPUTDEVICE8 keyBoard) {
-            }
 
             DIMOUSESTATE mouseData;
             m_pMouseDevice->GetDeviceState(sizeof(mouseData), (void*)&mouseData);
 
             // Mouse move
             dxrr->izqder = (mouseData.lX / 1000.0f);
-            player->setRotation(dxrr->izqder);
+            
             dxrr->arriaba = -(mouseData.lY / 1000.0f);
 
             if (gamePad->IsConnected()){
                 gamePad->GamePadMovment(dxrr);
-
             }
-
         }
     break;
     }

@@ -32,7 +32,7 @@ void Player::setPositions(D3DXVECTOR3 camara) {
 }
 
 void Player::setRotation(float rotation) {
-	this->rotation += rotation;
+	this->rotation = rotation;
 }
 
 float Player::getRotation() {
