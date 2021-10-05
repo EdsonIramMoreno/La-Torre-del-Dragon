@@ -15,16 +15,16 @@
 
 using namespace std;
 
-struct square {
+union collisionU {
+	struct square{
 	float x, z;
 	float w, h;
 
 	bool collisionSS(collisionU obj) {
 		if (this->x >= obj.squareCollision.x && this->x <= (obj.squareCollision.x + obj.squareCollision.w)) {
-			if(this->z >= obj.squareCollision.z && this->z <= (obj.squareCollision.z + obj.squareCollision.h))
+			if (this->z >= obj.squareCollision.z && this->z <= (obj.squareCollision.z + obj.squareCollision.h))
 			return true;
 		return false;
-		
 		}
 	return false;
 	}
@@ -32,23 +32,22 @@ struct square {
 	bool collisionSC(collisionU obj) {
 		float px, pz, distancia;
 		px = obj.circleCollision.cx; // En principio son iguales
-		if (px < this->x) 
+		if (px < this->x)
 			px = this->x;
-		if (px > this->x + this->w) 
+		if (px > this->x + this->w)
 			px = this->x + this->w;
 		pz = obj.circleCollision.cz;
-		if (pz < this->z) 
+		if (pz < this->z)
 			pz = this->z;
-		if (pz > this->z + this->h) 
+		if (pz > this->z + this->h)
 			pz = this->z + this->h;
 		distancia = sqrt((obj.circleCollision.cx - px) * (obj.circleCollision.cx - px) + (obj.circleCollision.cz - pz) * (obj.circleCollision.cz - pz));
 		if (distancia < obj.circleCollision.r)
 			return true;
 		return false;
 	}
-};
-
-struct circle {
+	} squareCollision;
+	struct circle{
 	float cx, cz;
 	float r;
 
@@ -77,11 +76,7 @@ struct circle {
 			return true;
 		return false;
 	}
-};
-
-union collisionU {
-	square squareCollision;
-	circle circleCollision;
+	}circleCollision;
 };
 
 class ModeloRR{

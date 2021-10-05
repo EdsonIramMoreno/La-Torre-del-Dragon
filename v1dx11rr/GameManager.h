@@ -11,6 +11,7 @@
 #include <conio.h>
 #include <vector>
 #include <iostream>
+#include "Billboard.h"
 #include "Camara.h"
 #include"TerrenoRR.h"
 
@@ -29,6 +30,14 @@ private:
 
 	ModeloRR* Models[6];
 
+	BillboardRR* fire;
+
+	int frameFire;
+
+	vector2 uv1[32], uv2[32], uv3[32], uv4[32];
+
+	void billCargaFuego();
+
 public:
 	void getCamaraGM(Camara*);
 
@@ -38,16 +47,21 @@ public:
 
 	void loadModels(ID3D11Device*, ID3D11DeviceContext*);
 
+	void loadBillboards(ID3D11Device*, ID3D11DeviceContext*);
+
 	void unloadModels();
 
 	void drawModels();
+
+	void drawBillboards();
+
+	void setFrames();
 
 	float camaraOffsetY(bool);
 
 	void GetDesktopResolution(int&, int&);
 
 	bool detectCollision(ModeloRR*);
-
 };
 
 

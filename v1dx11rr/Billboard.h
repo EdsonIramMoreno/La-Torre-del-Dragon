@@ -44,7 +44,7 @@ public:
 	D3DXMATRIX projMatrix;
 
 	float posx, posz;
-	float escalx, escaly;
+	float escalx, escaly, escala;
 
 	UINT* indices;
 	VertexComponent* vertices;
@@ -56,28 +56,43 @@ public:
 	D3DXVECTOR3 frontal;
 
 public:
-	BillboardRR(WCHAR* billb, WCHAR* normal, ID3D11Device* D3DDevice, ID3D11DeviceContext* D3DContext, float escala)
-	{
+	BillboardRR(WCHAR* billb, WCHAR* normal, ID3D11Device* D3DDevice, ID3D11DeviceContext* D3DContext, float escala, float posX, float posZ){
 		//copiamos el device y el device context a la clase terreno
 		d3dContext = D3DContext;
 		d3dDevice = D3DDevice;
 		//este es el ancho y el alto del terreno en su escala
 		
 		float escal = escala;
+		this->escala = escala;
 		frontal = D3DXVECTOR3(0, 0, 1);
 		//aqui cargamos las texturas de alturas y el cesped
 		CargaParametros(billb,normal, escal);
+
+		//Aqui ponemos las coordenadas del bill
+		posx = posX;
+		posz = posZ;
 	}
 
-	~BillboardRR()
-	{
+	float getPosX() {
+		return this->posx;
+	}
+
+	float getPosZ() {
+		return this->posz;
+	}
+	
+	float getEscala() {
+		return this->escala;
+	}
+
+
+	~BillboardRR(){
 		//libera recursos
 		delete vertcol;
 		UnloadContent();
 	}
 
-	bool CompileD3DShader(WCHAR* filePath, char* entry, char* shaderModel, ID3DBlob** buffer)
-	{
+	bool CompileD3DShader(WCHAR* filePath, char* entry, char* shaderModel, ID3DBlob** buffer){
 		//forma de compilar el shader
 		DWORD shaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 
@@ -102,8 +117,7 @@ public:
 		return true;
 	}
 
-	bool CargaParametros(WCHAR* billb, WCHAR* normal, float escala)
-	{
+	bool CargaParametros(WCHAR* billb, WCHAR* normal, float escala){
 		HRESULT d3dResult;
 		ID3DBlob* vsBuffer = 0;
 
@@ -277,11 +291,7 @@ public:
 		return true;
 	}
 
-
-
-
-	bool UnloadContent()
-	{
+	bool UnloadContent(){
 		if (colorMapSampler)
 			colorMapSampler->Release();
 		if (colorMap)
@@ -317,11 +327,7 @@ public:
 		worldCB = 0;
 	}
 
-
-	void Draw(D3DXMATRIX vista, D3DXMATRIX proyeccion, D3DXVECTOR3 poscam, float xx, float zz, float posy, float escala, vector2* uv1, vector2* uv2, vector2* uv3, vector2* uv4, int frame)
-	{
-		posx = xx;
-		posz = zz;
+	void Draw(D3DXMATRIX vista, D3DXMATRIX proyeccion, D3DXVECTOR3 poscam, float xx, float zz, float posy, float escala, vector2* uv1, vector2* uv2, vector2* uv3, vector2* uv4, int frame){
 		vertices = new VertexComponent[4];
 
 		// Se calculan los vertices 'x' y 'z'. 'Y' se saca del mapa de normales
@@ -421,8 +427,7 @@ public:
 
 	}
 
-	void estableceIndices()
-	{
+	void estableceIndices(){
 		HRESULT d3dResult;
 
 		indices = new UINT[6];
@@ -455,6 +460,78 @@ public:
 		}
 		delete indices;
 	}
+
+	class Builder {
+		ID3D11Device* D3DDevice;
+		ID3D11DeviceContext* D3DContext;
+		WCHAR* billb;
+		WCHAR* normal;
+		float escala;
+		/*short typeOfCollision;
+		float xWith, zHeight;*/
+		float _posX;
+		float _posZ;
+	public:
+
+		BillboardRR* Build() {
+			return new BillboardRR(billb, normal, D3DDevice, D3DContext, escala, _posX, _posZ);
+		}
+
+		Builder* setD3DDevice(ID3D11Device* D3DDevice) {
+			this->D3DDevice = D3DDevice;
+			return this;
+		}
+
+		Builder* setDD3DContext(ID3D11DeviceContext* D3DContext) {
+			this->D3DContext = D3DContext;
+			return this;
+		}
+
+		Builder* setBillboard(WCHAR* billb) {
+			this->billb = billb;
+			return this;
+		}
+
+		Builder* setNormalMap(WCHAR* normal) {
+			this->normal = normal;
+			return this;
+		}
+
+		Builder* setPosX(float PosX) {
+			this->_posX = PosX;
+			return this;
+		}
+
+		Builder* setPosZ(float PosZ) {
+			this->_posZ = PosZ;
+			return this;
+		}
+		
+		Builder* setEscala(float escala) {
+			this->escala = escala;
+			return this;
+		}
+
+		/*Builder* setTypeOfCollision(short typeOfCollision) {
+			this->typeOfCollision = typeOfCollision;
+			return this;
+		}
+
+		Builder* setRadius(float xWith) {
+			this->xWith = xWith;
+			return this;
+		}
+
+		Builder* setXWith(float xWith) {
+			this->xWith = xWith;
+			return this;
+		}
+
+		Builder* setZHeight(float zHeight) {
+			this->zHeight = zHeight;
+			return this;
+		}*/
+	};
 
 };
 

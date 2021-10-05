@@ -48,10 +48,6 @@ public:
 	float arriaba;
 	float vel;
 	bool breakpoint;
-	vector2 uv1[32];
-	vector2 uv2[32];
-	vector2 uv3[32];
-	vector2 uv4[32];
 
 	XACTINDEX cueIndex;
 	CXACT3Util m_XACT3;
@@ -71,13 +67,12 @@ public:
 		IniciaD3D(hWnd);
 		izqder = 0;
 		arriaba = 0;
-		billCargaFuego();
 		camara = new Camara(D3DXVECTOR3(0,80,6), D3DXVECTOR3(0, 80,180), D3DXVECTOR3(0,1,0), Ancho, Alto);
 		terreno = new TerrenoRR(300, 300, d3dDevice, d3dContext);
 		skydome = new SkyDome(32, 32, 100.0f, &d3dDevice, &d3dContext, L"SkyDome.png");
-		billboard = new BillboardRR(L"Assets/Billboards/fuego-anim.png",L"Assets/Billboards/fuego-anim-normal.png", d3dDevice, d3dContext, 5);
-
+		
 		gm->loadModels(d3dDevice, d3dContext);
+		gm->loadBillboards(d3dDevice, d3dContext);
 		gm->getTerrenoGM(terreno);
 
 	}
@@ -260,8 +255,6 @@ public:
 		TurnOnDepth();
 		terreno->Draw(camara->vista, camara->proyeccion);
 		//TurnOnAlphaBlending();
-		billboard->Draw(camara->vista, camara->proyeccion, camara->posCam,
-			-11, -78, 4, 5, uv1, uv2, uv3, uv4, frameBillboard);
 
 		gm->getCamaraGM(camara);
 
@@ -277,6 +270,7 @@ public:
 			player->playerModelT->Draw(camara->vista, camara->proyeccion, terreno->Superficie(player->playerModelT->getPosX(), player->playerModelT->getPosZ()) + 7.5, camara->posCam, 10.0f, player->getRotation(), 'Y', .5);
 		}
 		gm->drawModels();
+		gm->drawBillboards();
 
 		/*vel = 0;
 		izqder = 0;
@@ -392,66 +386,6 @@ public:
 
 		d3dDevice->CreateDepthStencilState(&descDDSD, &depthStencilDisabledState);
 		d3dContext->OMSetDepthStencilState(depthStencilDisabledState, 1);
-	}
-
-	void billCargaFuego(){
-		uv1[0].u = .125;
-		uv2[0].u = .125;
-		uv3[0].u = 0;
-		uv4[0].u = 0;
-
-		uv1[0].v = .25;
-		uv2[0].v = 0;
-		uv3[0].v = 0;
-		uv4[0].v = .25;
-
-
-		for (int j = 0; j < 8; j++) {
-			uv1[j].u = uv1[0].u + (j * .125);
-			uv2[j].u = uv2[0].u + (j * .125);
-			uv3[j].u = uv3[0].u + (j * .125);
-			uv4[j].u = uv4[0].u + (j * .125);
-
-			uv1[j].v = .25;
-			uv2[j].v = 0;
-			uv3[j].v = 0;
-			uv4[j].v = .25;
-		}
-		for (int j = 0; j < 8; j++) {
-			uv1[j + 8].u = uv1[0].u + (j * .125);
-			uv2[j + 8].u = uv2[0].u + (j * .125);
-			uv3[j + 8].u = uv3[0].u + (j * .125);
-			uv4[j + 8].u = uv4[0].u + (j * .125);
-
-			uv1[j + 8].v = .5;
-			uv2[j + 8].v = .25;
-			uv3[j + 8].v = .25;
-			uv4[j + 8].v = .5;
-		}
-
-		for (int j = 0; j < 8; j++) {
-			uv1[j + 16].u = uv1[0].u + (j * .125);
-			uv2[j + 16].u = uv2[0].u + (j * .125);
-			uv3[j + 16].u = uv3[0].u + (j * .125);
-			uv4[j + 16].u = uv4[0].u + (j * .125);
-
-			uv1[j + 16].v = .75;
-			uv2[j + 16].v = .5;
-			uv3[j + 16].v = .5;
-			uv4[j + 16].v = .75;
-		}
-
-		for (int j = 0; j < 8; j++) {
-			uv1[j + 24].u = uv1[0].u + (j * .125);
-			uv2[j + 24].u = uv2[0].u + (j * .125);
-			uv3[j + 24].u = uv3[0].u + (j * .125);
-			uv4[j + 24].u = uv4[0].u + (j * .125);
-
-			uv1[j + 24].v = 1;
-			uv2[j + 24].v = .75;
-			uv3[j + 24].v = .75;
-			uv4[j + 24].v = 1;
-		}
 	}
 
 };

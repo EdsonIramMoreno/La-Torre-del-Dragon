@@ -183,9 +183,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
             dxrr->arriaba = 0;
 
             SetCursorPos(actualPoint.x, actualPoint.y);
-            dxrr->frameBillboard++;
-            if (dxrr->frameBillboard == 32)
-                dxrr->frameBillboard = 0;
+            gm->setFrames();
 
             char keyboardData[256];
             m_pKeyboardDevice->GetDeviceState(sizeof(keyboardData), (void*)&keyboardData);
