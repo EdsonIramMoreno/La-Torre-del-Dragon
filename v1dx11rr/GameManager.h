@@ -23,6 +23,15 @@ private:
 	Camara* camaraGM;
 	TerrenoRR* terrenoGM;
 	ModeloRR* model;
+	ModeloRR* Torre;
+	ModeloRR* Puente;
+	ModeloRR* Lampara;
+
+	ModeloRR* Fogata;
+	ModeloRR* Bote;
+	ModeloRR* Barriles;
+
+
 
 public:
 	void getCamaraGM(Camara*);
