@@ -152,12 +152,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam){
     float xPos = 0;
     float yPos = 0;
-
+    GameManager* gm = GameManager::getInstance();
     
 
     switch(message){
         case WM_DESTROY:{
-            GameManager* gm = GameManager::getInstance();
 				KillTimer(hWnd, 100);
                 PostQuitMessage(0);
                 gm->unloadModels();
@@ -213,7 +212,6 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
             // Mouse move
             dxrr->izqder = (mouseData.lX / 1000.0f);
-            
             dxrr->arriaba = -(mouseData.lY / 1000.0f);
 
             if (gamePad->IsConnected()){

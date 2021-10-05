@@ -276,12 +276,22 @@ public:
 		//TurnOffAlphaBlending();
 		//model->Draw(camara->vista, camara->proyeccion, terreno->Superficie(100, 20), camara->posCam, 10.0f, 0, 'A', 1);
 
-		player->setRotation(atan2(camara->refFront.x, camara->refFront.z));
-
-		player->setPositions(gm->camaraOffset(player->isFirstPerson()));
-		player->playerModel->Draw(camara->vista, camara->proyeccion, terreno->Superficie(player->playerModel->getPosX(), player->playerModel->getPosZ()) + 2.5, camara->posCam, 10.0f, player->getRotation(), 'Y', .5);
 		
+		if (player->isFirstPerson()) {
+			player->setRotation(atan2(camara->refFront.x, camara->refFront.z));
+			player->setPositions(camara->posCam);
+			player->playerModel->Draw(camara->vista, camara->proyeccion, terreno->Superficie(player->playerModel->getPosX(), player->playerModel->getPosZ()) + 2.5, camara->posCam, 10.0f, player->getRotation(), 'Y', .5);
+		}
+		else {
+			player->setRotation(atan2(camara->refFront.x, camara->refFront.z));
+			player->setPositions(gm->camaraOffset(player->isFirstPerson()));
+			player->playerModel->Draw(camara->vista, camara->proyeccion, terreno->Superficie(player->playerModel->getPosX(), player->playerModel->getPosZ()) + 15, camara->posCam, 10.0f, player->getRotation(), 'Y', .5);
+		}
 		gm->drawModels();
+
+		vel = 0;
+		izqder = 0;
+		arriaba = 0;
 
 		swapChain->Present( 1, 0 );
 	}

@@ -132,24 +132,25 @@ C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\xnamathmisc.inl
 D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\ModeloRR.h(291,64): warning C4244: 'argumento': conversión de 'int' a 'FLOAT'; posible pérdida de datos
 D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\ModeloRR.h(291,1): warning C4305: 'argumento': truncamiento de 'double' a 'FLOAT'
 D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\ModeloRR.h(347,1): warning C4305: '+=': truncamiento de 'double' a 'float'
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\ModeloRR.h(412,1): warning C4305: '+=': truncamiento de 'double' a 'float'
 D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(251,1): warning C4305: '+=': truncamiento de 'double' a 'float'
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(282,148): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(411,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(412,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(413,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(414,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(422,28): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(423,28): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(424,28): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(425,28): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(434,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(435,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(436,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(437,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(283,149): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(421,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(422,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(423,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(424,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(432,28): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(433,28): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(434,28): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(435,28): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(444,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(445,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
 D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(446,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
 D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(447,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(448,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(449,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(456,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(457,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(458,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\DXRR.h(459,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
 D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\GamePadRR.h(25,16): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
 D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\GamePadRR.h(29,47): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
 D:\VisualStudioProjects\TerrenoSkyBillModGC2\v1dx11rr\GamePadRR.h(34,19): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
