@@ -13,9 +13,6 @@
 #pragma comment (lib, "d3dx11.lib")
 #pragma comment (lib, "d3dx10.lib")
 
-#define SCREEN_X 1920
-#define SCREEN_Y 1080
-
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 Player* player;
@@ -26,6 +23,7 @@ tagPOINT actualPoint;
 LPDIRECTINPUT8 m_pDirectInput = NULL;
 LPDIRECTINPUTDEVICE8 m_pKeyboardDevice = NULL;
 LPDIRECTINPUTDEVICE8 m_pMouseDevice = NULL;
+int SCREEN_X = 0, SCREEN_Y = 0;
 
 void createMouseDevice(HWND hWnd) {
     m_pDirectInput->CreateDevice(GUID_SysMouse, &m_pMouseDevice, 0);
@@ -58,6 +56,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
     DEVMODE dmScreenSettings;
     int posX, posY;
     ZeroMemory(&wc, sizeof(WNDCLASSEX));
+    GameManager* gm = GameManager::getInstance();
+    gm->GetDesktopResolution(SCREEN_X, SCREEN_Y);
 
     wc.cbSize = sizeof(WNDCLASSEX);
     wc.style = CS_HREDRAW | CS_VREDRAW;
@@ -166,7 +166,26 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 			} break;
         case WM_KEYDOWN:{
+            char keyboardData[256];
+            m_pKeyboardDevice->GetDeviceState(sizeof(keyboardData), (void*)&keyboardData);
+
+            if (keyboardData[DIK_Q] & 0x80) {
+                player->setFirstPerson();
+
+            }
+            
+        }
+            break;
+        case WM_MOUSEMOVE: {
+
             dxrr->vel = 0;
+            dxrr->izqder = 0;
+            dxrr->arriaba = 0;
+
+            SetCursorPos(actualPoint.x, actualPoint.y);
+            dxrr->frameBillboard++;
+            if (dxrr->frameBillboard == 32)
+                dxrr->frameBillboard = 0;
 
             char keyboardData[256];
             m_pKeyboardDevice->GetDeviceState(sizeof(keyboardData), (void*)&keyboardData);
@@ -176,10 +195,6 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
             }
             else if (keyboardData[DIK_W] & 0x80 || keyboardData[DIK_UP] & 0x80) {
                 dxrr->vel = 5.f;
-            }
-            else if (keyboardData[DIK_Q] & 0x80) {
-                player->setFirstPerson();
-
             }
             else if (keyboardData[DIK_B] & 0x80) {
                 dxrr->breakpoint = true;
@@ -196,16 +211,6 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
                 PostQuitMessage(0);
                 return 0;
             }
-        }
-            break;
-        case WM_MOUSEMOVE: {
-            SetCursorPos(actualPoint.x, actualPoint.y);
-            dxrr->frameBillboard++;
-            if (dxrr->frameBillboard == 32)
-                dxrr->frameBillboard = 0;
-
-            dxrr->izqder = 0;
-            dxrr->arriaba = 0;
 
             DIMOUSESTATE mouseData;
             m_pMouseDevice->GetDeviceState(sizeof(mouseData), (void*)&mouseData);

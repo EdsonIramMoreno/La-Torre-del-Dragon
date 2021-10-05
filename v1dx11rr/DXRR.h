@@ -43,7 +43,6 @@ public:
 	SkyDome *skydome;
 	BillboardRR *billboard;
 	Camara *camara;
-	ModeloRR* model;
 	
 	float izqder;
 	float arriaba;
@@ -77,14 +76,7 @@ public:
 		terreno = new TerrenoRR(300, 300, d3dDevice, d3dContext);
 		skydome = new SkyDome(32, 32, 100.0f, &d3dDevice, &d3dContext, L"SkyDome.png");
 		billboard = new BillboardRR(L"Assets/Billboards/fuego-anim.png",L"Assets/Billboards/fuego-anim-normal.png", d3dDevice, d3dContext, 5);
-		//Esta linea comentada hace lo mismo que la de abajo, pero se me hace más sencillo utilizar el builder
-		//model = new ModeloRR(d3dDevice, d3dContext, "Assets/Cofre/Cofre.obj", L"Assets/Cofre/Cofre-color.png", L"Assets/Cofre/Cofre-spec.png", 0, 0);
-		/*model = ModeloRR::Builder().setD3DDevice(d3dDevice)->
-									setDD3DContext(d3dContext)->
-									setModelPath("Assets/Cofre/Cofre.obj")->
-									setcolorTexturePath(L"Assets/Cofre/Cofre-color.png")->
-									setspecularTexturePath(L"Assets/Cofre/Cofre-spec.png")->
-									setPosX(0)->setPosZ(0)->Build();*/
+
 		gm->loadModels(d3dDevice, d3dContext);
 		gm->getTerrenoGM(terreno);
 
@@ -276,22 +268,19 @@ public:
 		//TurnOffAlphaBlending();
 		//model->Draw(camara->vista, camara->proyeccion, terreno->Superficie(100, 20), camara->posCam, 10.0f, 0, 'A', 1);
 
-		
+		player->setRotation(atan2(camara->refFront.x, camara->refFront.z));
+		player->setPositions(camara->posCam);
 		if (player->isFirstPerson()) {
-			player->setRotation(atan2(camara->refFront.x, camara->refFront.z));
-			player->setPositions(camara->posCam);
-			player->playerModel->Draw(camara->vista, camara->proyeccion, terreno->Superficie(player->playerModel->getPosX(), player->playerModel->getPosZ()) + 2.5, camara->posCam, 10.0f, player->getRotation(), 'Y', .5);
+			player->playerModelF->Draw(camara->vista, camara->proyeccion, terreno->Superficie(player->playerModelF->getPosX(), player->playerModelF->getPosZ()) + 5, camara->posCam, 10.0f, player->getRotation(), 'Y', .5);
 		}
 		else {
-			player->setRotation(atan2(camara->refFront.x, camara->refFront.z));
-			player->setPositions(gm->camaraOffset(player->isFirstPerson()));
-			player->playerModel->Draw(camara->vista, camara->proyeccion, terreno->Superficie(player->playerModel->getPosX(), player->playerModel->getPosZ()) + 15, camara->posCam, 10.0f, player->getRotation(), 'Y', .5);
+			player->playerModelT->Draw(camara->vista, camara->proyeccion, terreno->Superficie(player->playerModelT->getPosX(), player->playerModelT->getPosZ()) + 7.5, camara->posCam, 10.0f, player->getRotation(), 'Y', .5);
 		}
 		gm->drawModels();
 
-		vel = 0;
+		/*vel = 0;
 		izqder = 0;
-		arriaba = 0;
+		arriaba = 0;*/
 
 		swapChain->Present( 1, 0 );
 	}

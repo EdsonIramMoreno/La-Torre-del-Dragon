@@ -15,7 +15,8 @@ class Player{
 	bool firstPerson;
 	float rotation;
 public:
-	ModeloRR* playerModel;
+	ModeloRR* playerModelF;
+	ModeloRR* playerModelT;
 	Player(ID3D11Device* _ID3D11Device, ID3D11DeviceContext* _ID3D11DeviceContext);
 	bool isFirstPerson();
 	void setFirstPerson();

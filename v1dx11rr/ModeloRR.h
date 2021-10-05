@@ -15,6 +15,75 @@
 
 using namespace std;
 
+struct square {
+	float x, z;
+	float w, h;
+
+	bool collisionSS(collisionU obj) {
+		if (this->x >= obj.squareCollision.x && this->x <= (obj.squareCollision.x + obj.squareCollision.w)) {
+			if(this->z >= obj.squareCollision.z && this->z <= (obj.squareCollision.z + obj.squareCollision.h))
+			return true;
+		return false;
+		
+		}
+	return false;
+	}
+
+	bool collisionSC(collisionU obj) {
+		float px, pz, distancia;
+		px = obj.circleCollision.cx; // En principio son iguales
+		if (px < this->x) 
+			px = this->x;
+		if (px > this->x + this->w) 
+			px = this->x + this->w;
+		pz = obj.circleCollision.cz;
+		if (pz < this->z) 
+			pz = this->z;
+		if (pz > this->z + this->h) 
+			pz = this->z + this->h;
+		distancia = sqrt((obj.circleCollision.cx - px) * (obj.circleCollision.cx - px) + (obj.circleCollision.cz - pz) * (obj.circleCollision.cz - pz));
+		if (distancia < obj.circleCollision.r)
+			return true;
+		return false;
+	}
+};
+
+struct circle {
+	float cx, cz;
+	float r;
+
+	bool collisionCC(collisionU obj) {
+		float distancia;
+		distancia = sqrt((this->cx - obj.circleCollision.cx) * (this->cx - obj.circleCollision.cx) + (this->cz - obj.circleCollision.cz) * (this->cz - obj.circleCollision.cz));
+		if (distancia < this->r + obj.circleCollision.r)
+			return true;
+		return false;
+	}
+
+	bool collisionCS(collisionU obj) {
+		float px, pz, distancia;
+		px = this->cx; // En principio son iguales
+		if (px < obj.squareCollision.x)
+			px = obj.squareCollision.x;
+		if (px > obj.squareCollision.x + obj.squareCollision.w)
+			px = obj.squareCollision.x + obj.squareCollision.w;
+		pz = this->cz;
+		if (pz < obj.squareCollision.z)
+			pz = obj.squareCollision.z;
+		if (pz > obj.squareCollision.z + obj.squareCollision.h)
+			pz = obj.squareCollision.z + obj.squareCollision.h;
+		distancia = sqrt((this->cx - px) * (this->cx - px) + (this->cz - pz) * (this->cz - pz));
+		if (distancia < this->r)
+			return true;
+		return false;
+	}
+};
+
+union collisionU {
+	square squareCollision;
+	circle circleCollision;
+};
+
 class ModeloRR{
 private:
 	struct VertexComponent{
@@ -71,14 +140,31 @@ private:
 	float posZ;
 	float rotation;
 
-public:
-	ModeloRR(ID3D11Device* D3DDevice, ID3D11DeviceContext* D3DContext, char* ModelPath, WCHAR* colorTexturePath, WCHAR* specularTexturePath, float _posX, float _posZ){
-		//copiamos el device y el device context a la clase terreno
-		d3dContext = D3DContext;
-		d3dDevice = D3DDevice;	
+	short typeOfCollision;
 
-		posX = _posX;
-		posZ = _posZ;
+public:
+	collisionU collision;
+
+	ModeloRR(ID3D11Device* D3DDevice, ID3D11DeviceContext* D3DContext, char* ModelPath, WCHAR* colorTexturePath, WCHAR* specularTexturePath, float _posX, float _posZ, short typeOfCollision, float xWith, float zHeight){
+		//copiamos el device y el device context a la clase terreno
+		this->d3dContext = D3DContext;
+		this->d3dDevice = D3DDevice;
+
+		this->posX = _posX;
+		this->posZ = _posZ;
+		this->typeOfCollision = typeOfCollision;
+
+		if (this->typeOfCollision == 1) {//squareCollision
+			collision.squareCollision.x = this->posX;
+			collision.squareCollision.z = this->posZ;
+			collision.squareCollision.w = xWith;
+			collision.squareCollision.h = zHeight;
+		}
+		else {
+			collision.circleCollision.cx = this->posX;
+			collision.circleCollision.cz = this->posZ;
+			collision.circleCollision.r = xWith;
+		}
 
 		//aqui cargamos las texturas de alturas y el cesped
 		CargaParametros(ModelPath, colorTexturePath, specularTexturePath);//L"Assets/Tent-Tower/tent_diffuse.jpg"
@@ -112,6 +198,10 @@ public:
 
 	void setRotation(float rot) {
 		this->rotation = rot;
+	}
+
+	short getTypeOfCollision() {
+		return this->typeOfCollision;
 	}
 
 	bool CompileD3DShader(WCHAR* filePath, char* entry, char* shaderModel, ID3DBlob** buffer){
@@ -407,84 +497,21 @@ public:
 		d3dContext->Draw(m_ObjParser.m_nVertexCount, 0);
 	}
 
-	void Draw3rd(D3DXMATRIX vista, D3DXMATRIX proyeccion, float ypos, D3DXVECTOR3 posCam, float specForce, float rot, char angle, float scale) {
-		static float rotation = 0.0f;
-		rotation += 0.01;
-
-		//paso de datos, es decir cuanto es el ancho de la estructura
-		unsigned int stride = sizeof(VertexObj);
-		unsigned int offset = 0;
-
-		camPos.x = posCam.x;
-		camPos.y = posCam.y;
-		camPos.z = posCam.z;
-
-		//define la estructura del vertice a traves de layout
-		d3dContext->IASetInputLayout(inputLayout);
-
-		//define con que buffer trabajara
-		d3dContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
-
-		//define la forma de conexion de los vertices
-		d3dContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		//Establece el vertex y pixel shader que utilizara
-		d3dContext->VSSetShader(VertexShaderVS, 0, 0);
-		d3dContext->PSSetShader(solidColorPS, 0, 0);
-		//pasa lo sbuffers al shader
-		d3dContext->PSSetShaderResources(0, 1, &colorMap);
-		d3dContext->PSSetShaderResources(1, 1, &specMap);
-
-		d3dContext->PSSetSamplers(0, 1, &colorMapSampler);
-
-		//mueve la camara
-		D3DXMATRIX rotationMat;
-		D3DXMatrixRotationYawPitchRoll(&rotationMat, rot, 0.0f, 0.0f);
-		D3DXMATRIX translationMat;
-		D3DXMatrixTranslation(&translationMat, posX, ypos, posZ);
-		if (angle == 'X')
-			D3DXMatrixRotationX(&rotationMat, rot);
-		else if (angle == 'Y')
-			D3DXMatrixRotationY(&rotationMat, rot);
-		else if (angle == 'Z')
-			D3DXMatrixRotationZ(&rotationMat, rot);
-		viewMatrix *= rotationMat;
-
-		D3DXMATRIX scaleMat;
-		D3DXMatrixScaling(&scaleMat, scale, scale, scale);
-
-		D3DXMATRIX worldMat = translationMat * scaleMat * rotationMat;
-		D3DXMatrixTranspose(&worldMat, &worldMat);
-		//actualiza los buffers del shader
-		d3dContext->UpdateSubresource(worldCB, 0, 0, &worldMat, 0, 0);
-		d3dContext->UpdateSubresource(viewCB, 0, 0, &vista, 0, 0);
-		d3dContext->UpdateSubresource(projCB, 0, 0, &proyeccion, 0, 0);
-		d3dContext->UpdateSubresource(cameraPosCB, 0, 0, &camPos, 0, 0);
-		d3dContext->UpdateSubresource(specForceCB, 0, 0, &specForce, 0, 0);
-		//le pasa al shader los buffers
-		d3dContext->VSSetConstantBuffers(0, 1, &worldCB);
-		d3dContext->VSSetConstantBuffers(1, 1, &viewCB);
-		d3dContext->VSSetConstantBuffers(2, 1, &projCB);
-		d3dContext->VSSetConstantBuffers(3, 1, &cameraPosCB);
-		d3dContext->VSSetConstantBuffers(4, 1, &specForceCB);
-		//cantidad de trabajos
-
-		d3dContext->Draw(m_ObjParser.m_nVertexCount, 0);
-	}
-
 	class Builder {
 		ID3D11Device* D3DDevice;
 		ID3D11DeviceContext* D3DContext;
 		char* ModelPath;
 		WCHAR* colorTexturePath;
 		WCHAR* specularTexturePath;
+		short typeOfCollision;
+		float xWith, zHeight;
 		float _posX;
 		float _posZ;
 
 	public:
 
 		ModeloRR* Build() {
-			return new ModeloRR(D3DDevice, D3DContext, ModelPath, colorTexturePath, specularTexturePath, _posX, _posZ);
+			return new ModeloRR(D3DDevice, D3DContext, ModelPath, colorTexturePath, specularTexturePath, _posX, _posZ, typeOfCollision, xWith, zHeight);
 		}
 
 		Builder* setD3DDevice(ID3D11Device* D3DDevice) {
@@ -519,6 +546,26 @@ public:
 
 		Builder* setPosZ(float PosZ) {
 			this->_posZ = PosZ;
+			return this;
+		}
+
+		Builder* setTypeOfCollision(short typeOfCollision) {
+			this->typeOfCollision = typeOfCollision;
+			return this;
+		}
+
+		Builder* setRadius(float xWith) {
+			this->xWith = xWith;
+			return this;
+		}
+
+		Builder* setXWith(float xWith) {
+			this->xWith = xWith;
+			return this;
+		}
+
+		Builder* setZHeight(float zHeight) {
+			this->zHeight = zHeight;
 			return this;
 		}
 	};

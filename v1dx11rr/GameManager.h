@@ -16,22 +16,18 @@
 
 using namespace std;
 
+enum Modelos { Torre, Puente, Lampara, Fogata,
+				Bote, Barriles
+};
+
 class GameManager{
 private:
 	static GameManager* instance;
 	GameManager();
 	Camara* camaraGM;
 	TerrenoRR* terrenoGM;
-	ModeloRR* model;
-	ModeloRR* Torre;
-	ModeloRR* Puente;
-	ModeloRR* Lampara;
 
-	ModeloRR* Fogata;
-	ModeloRR* Bote;
-	ModeloRR* Barriles;
-
-
+	ModeloRR* Models[6];
 
 public:
 	void getCamaraGM(Camara*);
@@ -48,7 +44,9 @@ public:
 
 	float camaraOffsetY(bool);
 
-	D3DXVECTOR3 camaraOffset(bool);
+	void GetDesktopResolution(int&, int&);
+
+	bool detectCollision(ModeloRR*);
 
 };
 
