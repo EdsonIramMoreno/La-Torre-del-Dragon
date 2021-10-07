@@ -2,15 +2,15 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\VisualStudioProjects\TerrenoSkyBillModGC2\x64\Debug\TerrenoSkyBill.exe</FullPath>
+      <FullPath>D:\UANL2020COVID\2021\GraficasComputacionales\ProyectoGraficas2\x64\Debug\TerrenoSkyBill.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>D:\VisualStudioProjects\TerrenoSkyBillModGC2\x64\Debug\Billboard.cso</FullPath>
+      <FullPath>D:\UANL2020COVID\2021\GraficasComputacionales\ProyectoGraficas2\x64\Debug\Billboard.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>D:\VisualStudioProjects\TerrenoSkyBillModGC2\x64\Debug\Modelo.cso</FullPath>
+      <FullPath>D:\UANL2020COVID\2021\GraficasComputacionales\ProyectoGraficas2\x64\Debug\Modelo.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
