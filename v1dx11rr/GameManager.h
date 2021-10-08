@@ -34,6 +34,8 @@ private:
 
 	int frameFire;
 
+	float angleSkyDome;
+
 	vector2 uv1[32], uv2[32], uv3[32], uv4[32];
 
 	void billCargaFuego();
@@ -62,6 +64,10 @@ public:
 	void GetDesktopResolution(int&, int&);
 
 	bool detectCollision(ModeloRR*);
+
+	void setAngleSkydome();
+
+	float getAngleSkydome();
 };
 
 

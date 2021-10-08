@@ -234,9 +234,7 @@ public:
 		GameManager* gm = GameManager::getInstance();
 		float sphere[3] = { 0,0,0 };
 		float prevPos[3] = { camara->posCam.x, camara->posCam.z, camara->posCam.z };
-		static float angle = 0.0f;
-		angle += 0.005;
-		if (angle >= 360) angle = 0.0f;
+		gm->setAngleSkydome();
 		bool collide = false;
 		if( d3dContext == 0 )
 			return;
@@ -251,7 +249,7 @@ public:
 		float camPosXZ[2] = { camara->posCam.x, camara->posCam.z };
 
 		TurnOffDepth();
-		skydome->Render(camara->posCam);
+		skydome->Render(camara->posCam, gm->getAngleSkydome());
 		TurnOnDepth();
 		terreno->Draw(camara->vista, camara->proyeccion);
 		//TurnOnAlphaBlending();

@@ -123,6 +123,9 @@ void GameManager::GetDesktopResolution(int& horizontal, int& vertical){
 	// (horizontal, vertical)
 	horizontal = desktop.right;
 	vertical = desktop.bottom;
+
+	//used as constructor
+	angleSkyDome = 0;
 }
 
 bool GameManager::detectCollision(ModeloRR* player) {
@@ -138,6 +141,16 @@ bool GameManager::detectCollision(ModeloRR* player) {
 			break;
 	}
 	return collided;
+}
+
+void GameManager::setAngleSkydome() {
+	angleSkyDome += 0.0005;
+	if (angleSkyDome >= 360) 
+		angleSkyDome = 0.0f;
+}
+
+float GameManager::getAngleSkydome() {
+	return this->angleSkyDome;
 }
 
 void GameManager::billCargaFuego() {
