@@ -37,46 +37,71 @@ void GameManager::loadModels(ID3D11Device* d3dDevice, ID3D11DeviceContext* _ID3D
 		setModelPath("Assets/Torre/Torre.obj")->
 		setcolorTexturePath(L"Assets/Torre/Kickelhahn_C.png")->
 		setspecularTexturePath(L"Assets/Torre/SpecularMap.png")->
-		setPosX(0)->setPosZ(0)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
+		setPosX(-51)->setPosZ(-4)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
 	Models[Puente] = ModeloRR::Builder().setD3DDevice(d3dDevice)->
 		setDD3DContext(_ID3D11DeviceContext)->
-		setModelPath("Assets/Puente/Puente.obj")->
+		setModelPath("Assets/Puente/Puente2.obj")->
 		setcolorTexturePath(L"Assets/Puente/Most_texture_None_color.png")->
 		setspecularTexturePath(L"Assets/Puente/SpecularMap.png")->
-		setPosX(100)->setPosZ(100)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
+		setPosX(-117)->setPosZ(-325)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
 	Models[Lampara] = ModeloRR::Builder().setD3DDevice(d3dDevice)->
 		setDD3DContext(_ID3D11DeviceContext)->
 		setModelPath("Assets/Lampara/Lampara.obj")->
 		setcolorTexturePath(L"Assets/Lampara/DiffuseColor.png")->
 		setspecularTexturePath(L"Assets/Lampara/Lamp_Post_Spec.png")->
-		setPosX(-92)->setPosZ(-16)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
+		setPosX(-58)->setPosZ(-258)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
+	Models[Lampara2] = ModeloRR::Builder().setD3DDevice(d3dDevice)->
+		setDD3DContext(_ID3D11DeviceContext)->
+		setModelPath("Assets/Lampara/Lampara.obj")->
+		setcolorTexturePath(L"Assets/Lampara/DiffuseColor.png")->
+		setspecularTexturePath(L"Assets/Lampara/Lamp_Post_Spec.png")->
+		setPosX(-80)->setPosZ(-244)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
+	Models[Lampara3] = ModeloRR::Builder().setD3DDevice(d3dDevice)->
+		setDD3DContext(_ID3D11DeviceContext)->
+		setModelPath("Assets/Lampara/Lampara.obj")->
+		setcolorTexturePath(L"Assets/Lampara/DiffuseColor.png")->
+		setspecularTexturePath(L"Assets/Lampara/Lamp_Post_Spec.png")->
+		setPosX(-165)->setPosZ(-393)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
+
+	Models[Lampara4] = ModeloRR::Builder().setD3DDevice(d3dDevice)->
+		setDD3DContext(_ID3D11DeviceContext)->
+		setModelPath("Assets/Lampara/Lampara.obj")->
+		setcolorTexturePath(L"Assets/Lampara/DiffuseColor.png")->
+		setspecularTexturePath(L"Assets/Lampara/Lamp_Post_Spec.png")->
+		setPosX(-144)->setPosZ(-405)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
+
+
 	Models[Fogata] = ModeloRR::Builder().setD3DDevice(d3dDevice)->
 		setDD3DContext(_ID3D11DeviceContext)->
 		setModelPath("Assets/Fogata/Fogata.obj")->
 		setcolorTexturePath(L"Assets/Fogata/campfire_base.png")->
 		setspecularTexturePath(L"Assets/Fogata/SpecularMap.png")->
-		setPosX(133)->setPosZ(-133)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
+		setPosX(-21)->setPosZ(-147)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
 	Models[Bote] = ModeloRR::Builder().setD3DDevice(d3dDevice)->
 		setDD3DContext(_ID3D11DeviceContext)->
 		setModelPath("Assets/Bote/bote.obj")->
 		setcolorTexturePath(L"Assets/Bote/boatColor.png")->
 		setspecularTexturePath(L"Assets/Bote/SpecularMap.png")->
-		setPosX(-24)->setPosZ(-89)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
+		setPosX(-116.5)->setPosZ(-215)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
 	Models[Barriles] = ModeloRR::Builder().setD3DDevice(d3dDevice)->
 		 setDD3DContext(_ID3D11DeviceContext)->
 		 setModelPath("Assets/Barriles/Barriles.obj")->
 		 setcolorTexturePath(L"Assets/Barriles/wooden_barrel_albedo_25.png")->
 		 setspecularTexturePath(L"Assets/Barriles/wooden_barrel_specular_25.png")->
-		 setPosX(28)->setPosZ(-130)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
+		 setPosX(-72)->setPosZ(-30)->setTypeOfCollision(1)->setXWith(10)->setZHeight(10)->Build();
 }
 
 void GameManager::drawModels() {
-	Models[Torre]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(30, 0), camaraGM->posCam, 10.0f, 0, 'X', 0.06);
-	Models[Puente]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(0, 0), camaraGM->posCam, 10.0f, 0, 'X', 5);
-	Models[Lampara]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(-10, 0), camaraGM->posCam, 10.0f, 0, 'X', 1.5);
-	Models[Fogata]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(-20, 0), camaraGM->posCam, 10.0f, 0, 'X', 0.5);
-	Models[Bote]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(0, 0), camaraGM->posCam, 10.0f, 0, 'X', 0.5);
-	Models[Barriles]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(0, 0), camaraGM->posCam, 10.0f, 0, 'X', 0.5);
+	Models[Torre]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(45, 0), camaraGM->posCam, 10.0f, 60, 'Y', 0.1);
+	Models[Puente]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(100, 0), camaraGM->posCam, 10.0f, -100, 'Y', 6);
+	Models[Lampara]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(-10, 0), camaraGM->posCam, 10.0f, 60, 'Y', 1.5);
+	Models[Lampara2]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(-10, 0), camaraGM->posCam, 10.0f, 1, 'Y', 1.5);
+	Models[Lampara3]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(-20, 0), camaraGM->posCam, 10.0f, 1, 'Y', 1.5);
+	Models[Lampara4]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(-20, 0), camaraGM->posCam, 10.0f, 60, 'Y', 1.5);
+
+	Models[Fogata]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(-35, 0), camaraGM->posCam, 10.0f, 0, 'X', 1.2);
+	Models[Bote]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(0, 0), camaraGM->posCam, 10.0f, 0, 'X', 1.0);
+	Models[Barriles]->Draw(camaraGM->vista, camaraGM->proyeccion, terrenoGM->Superficie(-15, 0), camaraGM->posCam, 10.0f, 0, 'X', 1.0);
 }
 
 void GameManager::loadBillboards(ID3D11Device* d3dDevice, ID3D11DeviceContext* _ID3D11DeviceContext) {
@@ -86,13 +111,13 @@ void GameManager::loadBillboards(ID3D11Device* d3dDevice, ID3D11DeviceContext* _
 		setDD3DContext(_ID3D11DeviceContext)->
 		setBillboard(L"Assets/Billboards/fuego-anim.png")->
 		setNormalMap(L"Assets/Billboards/fuego-anim-normal.png")->
-		setEscala(5)->setPosX(-11)->setPosZ(-78)->Build();
+		setEscala(2)->setPosX(-21)->setPosZ(-147)->Build();
 }
 
 void GameManager::drawBillboards(){
-	fire->Draw(camaraGM->vista, camaraGM->proyeccion, camaraGM->posCam, 
-		fire->getPosX(), fire->getPosZ(), fire->getEscala(), 
-		terrenoGM->Superficie(fire->getPosX(), fire->getPosZ()) + 5, uv1, uv2, uv3, uv4, frameFire);
+	fire->Draw(camaraGM->vista, camaraGM->proyeccion, camaraGM->posCam, fire->getPosX(), fire->getPosZ(), fire->getEscala(), terrenoGM->Superficie(-50, 0), uv1, uv2, uv3, uv4, frameFire);
+		
+		
 }
 
 void GameManager::setFrames() {
