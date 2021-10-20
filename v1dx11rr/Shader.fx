@@ -62,22 +62,17 @@ float4 PS_Main(PS_Input pix) : SV_TARGET
 
 	float4 text = colorMap.Sample(colorSampler, pix.tex0);
 	float4 text2 = colorMap2.Sample(colorSampler, pix.tex0);
-
 	float4 alphaBlend = blendMap.Sample(colorSampler, pix.blendTex);
-	
 	float4 textf = (text * alphaBlend) + ((1.0 - alphaBlend) * text2);
-	
 
-	///luzdufusa
 	float3 DiffuseDirection = float3(0.5f, -1.0f, 0.0f);
-	///colorluz
 	float4 DiffuseColor = float4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	float3 diffuse = dot(-DiffuseDirection, pix.normal);
 	diffuse = saturate(diffuse*DiffuseColor.rgb);
 	diffuse = saturate(diffuse + ambient);
 
-	fColor = float4(textf.rgb* diffuse, 1.0f);
+	fColor = float4(textf.rgb * diffuse, 1.0f);
 
 	return fColor;
 }

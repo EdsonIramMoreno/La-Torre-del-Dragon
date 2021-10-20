@@ -17,7 +17,7 @@
 
 using namespace std;
 
-enum Modelos { Torre, Puente, Lampara, Lampara2, Lampara3, Lampara4, Fogata,
+enum Modelos { Torre, Puente, Lampara, Fogata,
 				Bote, Barriles
 };
 
@@ -28,7 +28,7 @@ private:
 	Camara* camaraGM;
 	TerrenoRR* terrenoGM;
 
-	ModeloRR* Models[9];
+	ModeloRR* Models[6];
 
 	BillboardRR* fire;
 
