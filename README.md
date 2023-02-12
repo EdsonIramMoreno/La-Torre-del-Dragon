@@ -1,6 +1,6 @@
 # La torre del dragon
 
-**[Ckick here to view the project](https://www.youtube.com/watch?v=6YrvZhSOhlc&t=34s "Ckick here to view the project")**
+**[Ckick here to view the project](https://www.youtube.com/watch?v=6YrvZhSOhlc&t=0s "Ckick here to view the project")**
 
 This was my final project of a 6th semester subject called Computer Graphics 2, it is a basic 3D world, where the main point was to make it as high quality as possible.
 
